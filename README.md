@@ -1,8 +1,6 @@
 # How to make code changes on the beaglebone remotely using visual studio code
 
-1. Install Visual Studio Code 
-
-[Download Link](https://code.visualstudio.com/Download)
+1. Install Visual Studio Code - [Download Link](https://code.visualstudio.com/Download)
 
 2. Open Visual Studio Code, click the extensions icon in the side panel and search for "SSH FS"
 
