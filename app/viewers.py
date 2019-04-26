@@ -161,14 +161,9 @@ class EnvironmentViewer:
                     "`peripheral_type` must be either `sensor` or `actuator`"
                 )
 
-            if info is None:
+            # NOTE: get_sensor_variable_info and get_actuator_variable_info retrun {} not None for variables that dont exist so I have added the or info == {}
+            if info is None or info == {}:
                 continue
-
-
-            print("\n\n\n\nINFO HERE")
-            print(variable)
-            print(info)
-            print("INFO HERE\n\n\n\n")
 
             # Get peripheral name and unit
             name = info["name"]["verbose"]
