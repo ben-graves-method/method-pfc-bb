@@ -166,6 +166,7 @@ class EnvironmentViewer:
 
 
             print("\n\n\n\nINFO HERE")
+            print(variable)
             print(info)
             print("INFO HERE\n\n\n\n")
 
