@@ -1,0 +1,101 @@
+{
+	"format": "openag-phased-environment-v1",
+	"version": "1",
+	"creation_timestamp_utc": "2018-03-30T16:45:41Z",
+	"name": "mPFC v0.1 Full Test",
+	"uuid": "18403d6a-1234-4892-a6f9-7e62631fd34f",
+	"parent_recipe_uuid": null,
+	"support_recipe_uuids": null,
+	"description": {
+		"brief": "Just a simple test for all mPFC peripherals.",
+		"verbose": "Uses all actuators and sensors. Based off of \"If Looks Could Kale\""
+	},
+	"authors": [
+		{
+			"name": "David Mayman",
+			"email": "dmayman@method.com",
+			"uuid": null
+		}
+	],
+	"cultivars": [
+		{
+			"name": "Scarlet Kale",
+			"uuid": "d6d76ff9-b12e-47bb-8e83-f872c7870856"
+		}
+	],
+	"cultivation_methods": [
+		{
+		"name": "Shallow Water Culture",
+		"uuid": "30cbbded-07a7-4c49-a47b-e34fc99eefd0"
+		}
+	],
+	"environments": {
+		"standard_day": {
+			"name": "Standard Day",
+			"light_spectrum_nm_percent": {"380-399": 2.03, "400-499": 20.30, "500-599": 23.27, "600-700": 31.09, "701-780": 23.31},
+			"light_ppfd_umol_m2_s": 800,
+			"light_illumination_distance_cm": 10,
+			"air_temperature_celsius": 22,
+			"air_humidity_percent": 80.0
+		},
+		"standard_night": {
+			"name": "Standard Night",
+			"light_spectrum_nm_percent": {"380-399": 0.0, "400-499": 0.0, "500-599": 0.0, "600-700": 0.0, "701-780": 0.0},
+			"light_ppfd_umol_m2_s": 0,
+			"light_illumination_distance_cm": 10,
+			"air_temperature_celsius": 18,
+			"air_humidity_percent": 50.0
+		},
+		"cold_day": {
+			"name": "Cold Day",
+			"light_spectrum_nm_percent": {"380-399": 2.03, "400-499": 20.30, "500-599": 23.27, "600-700": 31.09, "701-780": 23.31},
+			"light_ppfd_umol_m2_s": 800,
+			"light_illumination_distance_cm": 10,
+			"air_temperature_celsius": 10,
+			"air_humidity_percent": 40.0
+		},
+		"frost_night": {
+			"name": "Frost Night",
+			"light_spectrum_nm_percent": {"380-399": 0.0, "400-499": 0.0, "500-599": 0.0, "600-700": 0.0, "701-780": 0.0},
+			"light_ppfd_umol_m2_s": 0,
+			"light_illumination_distance_cm": 10,
+			"air_temperature_celsius": 2,
+			"air_humidity_percent": 30.0
+		}
+	},
+	"phases": [
+		{
+			"name": "Standard Growth",
+			"repeat": 30,
+			"cycles": [
+				{
+					"name": "Day",
+					"environment": "standard_day",
+					"duration_hours": 0.0167
+				},
+				{
+					"name": "Night",
+					"environment": "standard_night",
+					"duration_hours": 0.0167
+				}
+			]
+		},
+		{
+			"name": "Frosty Growth",
+			"repeat": 0,
+			"cycles": [
+				{
+					"name": "Day",
+					"environment": "cold_day",
+					"duration_hours": 18
+				},
+				{
+					"name": "Night",
+					"environment": "frost_night",
+					"duration_hours": 6
+				}
+			]
+
+		}
+	]
+}

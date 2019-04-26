@@ -1,0 +1,27 @@
+{
+    "peripherals": [
+        {
+            "name": "bens_cool_peripheral-1",
+            "type": "bens_cool_peripheral",
+            "uuid": "9046df17-b9d3-45ce-ae51-f48cf9de72d5",
+            "parameters": {
+                "setup": {
+                    "name": "Bens Cool Peripheral",
+                    "file_name": "bens_cool_peripheral/setups/default"
+                },
+                "variables": {
+                    "sensor": {
+                        "temperature_celsius": "air_temperature_celsius",
+                        "humidity_percent": "air_humidity_percent"},
+                    "actuator": null
+                },
+                "communication": {
+                    "bus": 2,
+                    "mux": "0x77",
+                    "channel": 2,
+                    "address": "0x40"
+                }
+            }
+        }
+    ]
+}

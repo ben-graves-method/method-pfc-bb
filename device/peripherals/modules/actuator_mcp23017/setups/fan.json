@@ -1,0 +1,86 @@
+{
+	"name":  "Fan",
+	"version": "1",
+	"uuid": "67a62b54-eace-401e-ad32-13c8f5da1c53",
+	"module_name": "actuator_mcp23017.manager",
+	"class_name": "ActuatorMCP23017Manager",
+	"parameters": {
+		"variables": {
+			"sensor": null,
+			"actuator": {
+				"output_variable": {
+					"name": {
+						"type": "string",
+						"default": "air_fan_percent"
+					}
+				}
+			}
+		},
+		"communication": {
+			"bus": {
+				"type": "integer",
+				"default": 2
+			},
+			"mux": {
+				"type": "string",
+				"default": "0x77"
+			},
+			"channel": {
+				"type": "integer",
+				"default": 0
+			},
+			"address": {
+				"type": "string",
+				"default": "0x47"
+			},
+			"port": {
+				"type": "number",
+				"default": 0
+			},
+			"is_active_high": {
+				"type": "boolean",
+				"default": true
+			}
+		}
+	},
+	"events": [
+	    {
+	        "name": "Reset",
+	        "description": "Reset actuator.",
+	        "value": null,
+	        "sequence": null
+	    },
+	    {
+	        "name": "Shutdown",
+	        "description": "Shutdown actuator.",
+	        "value": null,
+	        "sequence": null
+	    },
+	    {
+	        "name": "Enable Manual Mode",
+	        "description": "Allows actuator to be controlled by manual events.",
+	        "value": null,
+	        "sequence": null
+	    },
+	    {
+	        "name": "Turn On",
+	        "description": "Turn on fan.",
+	        "value": null,
+	        "sequence": null,
+	        "is_manual": true
+	    },
+	    {
+	        "name": "Turn Off",
+	        "description": "Turn off fan.",
+	        "value": null,
+	        "sequence": null,
+	        "is_manual": true
+	    }
+	],
+	"info": {
+		"variables": {
+			"sensor": null,
+			"actuator": null
+		}
+	}
+}
