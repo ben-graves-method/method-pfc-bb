@@ -164,7 +164,10 @@ class EnvironmentViewer:
             if info is None:
                 continue
 
-            input(info)
+
+            print("\n\n\n\nINFO HERE")
+            print(info)
+            print("INFO HERE\n\n\n\n")
 
             # Get peripheral name and unit
             name = info["name"]["verbose"]
