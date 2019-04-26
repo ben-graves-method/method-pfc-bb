@@ -133,7 +133,7 @@ class EnvironmentViewer:
         self.actuator_summary = self.get_environment_summary("actuator")
 
     def get_environment_summary(self, peripheral_type: str) -> Dict[str, str]:
-        """Gets environment summary of current reported --> desired value for each 
+        """Gets environment summary of current reported --> desired value for each
         variable in shared state."""
         self.logger.debug("Getting environment summary")
 
@@ -163,6 +163,8 @@ class EnvironmentViewer:
 
             if info is None:
                 continue
+
+            input(info)
 
             # Get peripheral name and unit
             name = info["name"]["verbose"]
