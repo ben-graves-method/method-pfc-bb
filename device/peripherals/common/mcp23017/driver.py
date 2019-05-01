@@ -75,7 +75,7 @@ class MCP23017Driver:
         elif value == 0 and self.kth_pin_set(pins, pin):
             self.logger.info("Turning pin {} off".format(pin))
             pins -= 2 ** pin
-            
+
         self.i2c.write_register(0x12, hex(pins))
 
         self.logger.info("PIN VALUES AFTER")
