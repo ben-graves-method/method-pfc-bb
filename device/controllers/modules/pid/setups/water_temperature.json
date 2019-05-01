@@ -1,0 +1,32 @@
+{
+	"name":  "Water Temperature PID Controller",
+	"version": "1",
+	"uuid": "9262e8cc-45fe-40a4-94ac-14ad064db45a",
+	"module_name": "pid.manager",
+	"class_name": "PIDControllerManager",
+	"parameters": {
+		"variables": {
+			"sensor_name": {
+				"type": "string", 
+				"default": "water_temperature_celsius"
+			},
+			"positive_actuator_name": {
+				"type": "string",
+				"default": "water_heater_percent"
+			},
+			"negative_actuator_name": {
+				"type": "string",
+				"default": "water_chiller_percent"
+			}
+		}
+	},
+	"properties": {
+        "P": 1.2,
+        "I": 1.0,
+        "D": 0.001,
+        "windup": 0.001,
+        "sample_time_seconds": 0.0
+	},
+	"events": null,
+	"info": {}
+}
