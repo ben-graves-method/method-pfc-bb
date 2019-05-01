@@ -3,7 +3,7 @@
 	"version": "1",
 	"uuid": "dc2d2886-8051-4528-ac08-f3f0d28c9e14",
 	"module_name": "actuator_dac5578.manager",
-	"class_name": "ActuatorDAC5578Manager",
+	"class_name": "BasicActuatorManager",
 	"parameters": {
 		"variables": {
 			"sensor": null,

@@ -3,7 +3,7 @@
 	"version": "1",
 	"uuid": "c4608459-c06d-441d-936f-7f1699ae187f",
 	"module_name": "actuator_basic_arduino.manager",
-	"class_name": "ActuatorArduinoManager",
+	"class_name": "BasicActuatorManager",
 	"parameters": {
 		"variables": {
 			"sensor": null,
