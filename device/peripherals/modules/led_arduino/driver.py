@@ -94,7 +94,7 @@ class LEDArduinoDriver:
         self.panels: List[LEDArduinoPanel] = []
         for config in panel_configs:
             panel = LEDArduinoPanel(
-                name, config, i2c_lock, simulate, mux_simulator, self.logger
+                name, config, i2c_lock, self.logger
             )
             panel.initialize()
             self.panels.append(panel)

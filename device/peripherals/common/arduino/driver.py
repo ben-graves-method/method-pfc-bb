@@ -60,13 +60,13 @@ class ArduinoCommsDriver:
     def set_high(self) -> None:
         self.logger.debug("Setting pins {} high".format(pins))
         try:
-            self.write(1)  # type: ignore
+            self.write_output(1)  # type: ignore
         except exceptions.WriteOutputError as e:
             raise exceptions.SetHighError(logger=self.logger) from e
 
     def set_low(self) -> None:
         self.logger.debug("Setting pins {} low".format(pins))
         try:
-            self.write(0)  # type: ignore
+            self.write_output(0)  # type: ignore
         except exceptions.WriteOutputError as e:
             raise exceptions.SetLowError(logger=self.logger) from e
