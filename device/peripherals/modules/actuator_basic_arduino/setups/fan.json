@@ -1,7 +1,7 @@
 {
 	"name":  "Fan",
 	"version": "1",
-	"uuid": "1aa7a8af-158d-4ee1-9b8a-3472b78e4b88",
+	"uuid": "726f5ae4-658d-4afc-8aba-836ca07bd7e8",
 	"module_name": "actuator_basic_arduino.manager",
 	"class_name": "ActuatorArduinoManager",
 	"parameters": {

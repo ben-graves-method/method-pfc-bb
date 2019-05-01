@@ -1,7 +1,7 @@
 {
 	"name":  "Light Panel Taurus Actuator",
 	"version": "1",
-	"uuid": "d0eec6ec-58de-497e-9676-45de7ae500d6",
+	"uuid": "6068f753-3aaf-4666-bb99-b5e982b19059",
 	"module_name": "led_arduino/manager",
 	"class_name": "LEDArduinoManager",
 	"parameters": {
