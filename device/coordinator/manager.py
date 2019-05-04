@@ -50,8 +50,8 @@ CULTIVATION_METHODS_SCHEMA_PATH = "data/schemas/cultivation_methods.json"
 
 
 class CoordinatorManager(StateMachineManager):
-    """Manages device state machine thread that spawns child threads to run
-    recipes, read sensors, set actuators, manage control loops, sync data,
+    """Manages device state machine thread that spawns child threads to run 
+    recipes, read sensors, set actuators, manage control loops, sync data, 
     and manage external events."""
 
     # Initialize vars
@@ -229,7 +229,7 @@ class CoordinatorManager(StateMachineManager):
                 break
 
     def run_init_mode(self) -> None:
-        """Runs init mode. Loads local data files and stored database state
+        """Runs init mode. Loads local data files and stored database state 
         then transitions to config mode."""
         self.logger.info("Entered INIT")
 
@@ -241,7 +241,7 @@ class CoordinatorManager(StateMachineManager):
         self.mode = modes.CONFIG
 
     def run_config_mode(self) -> None:
-        """Runs configuration mode. If device config is not set, loads 'unspecified'
+        """Runs configuration mode. If device config is not set, loads 'unspecified' 
         config then transitions to setup mode."""
         self.logger.info("Entered CONFIG")
 
@@ -287,8 +287,8 @@ class CoordinatorManager(StateMachineManager):
         self.mode = modes.SETUP
 
     def run_setup_mode(self) -> None:
-        """Runs setup mode. Creates and spawns recipe, peripheral, and
-        controller threads, waits for all threads to initialize then
+        """Runs setup mode. Creates and spawns recipe, peripheral, and 
+        controller threads, waits for all threads to initialize then 
         transitions to normal mode."""
         self.logger.info("Entered SETUP")
         config_uuid = self.state.device["config_uuid"]
@@ -321,7 +321,7 @@ class CoordinatorManager(StateMachineManager):
         self.mode = modes.NORMAL
 
     def run_normal_mode(self) -> None:
-        """Runs normal operation mode. Updates device state summary and stores device
+        """Runs normal operation mode. Updates device state summary and stores device 
         state in database, checks for new events and transitions."""
         self.logger.info("Entered NORMAL")
 
@@ -344,7 +344,7 @@ class CoordinatorManager(StateMachineManager):
             time.sleep(0.1)
 
     def run_load_mode(self) -> None:
-        """Runs load mode, shutsdown peripheral and controller threads then transitions
+        """Runs load mode, shutsdown peripheral and controller threads then transitions 
         to config mode."""
         self.logger.info("Entered LOAD")
 
@@ -393,7 +393,7 @@ class CoordinatorManager(StateMachineManager):
         self.mode = modes.INIT
 
     def run_error_mode(self) -> None:
-        """Runs error mode. Shutsdown child threads, waits for new events
+        """Runs error mode. Shutsdown child threads, waits for new events 
         and transitions."""
         self.logger.info("Entered ERROR")
 
@@ -474,7 +474,7 @@ class CoordinatorManager(StateMachineManager):
         self.load_device_config_files()
 
     def load_sensor_variables_file(self) -> None:
-        """ Loads sensor variables file into database after removing all
+        """ Loads sensor variables file into database after removing all 
             existing entries. """
         self.logger.debug("Loading sensor variables file")
 
@@ -493,7 +493,7 @@ class CoordinatorManager(StateMachineManager):
             models.SensorVariableModel.objects.create(json=json.dumps(sensor_variable))
 
     def load_actuator_variables_file(self) -> None:
-        """ Loads actuator variables file into database after removing all
+        """ Loads actuator variables file into database after removing all 
             existing entries. """
         self.logger.debug("Loading actuator variables file")
 
@@ -514,7 +514,7 @@ class CoordinatorManager(StateMachineManager):
             )
 
     def load_cultivars_file(self) -> None:
-        """ Loads cultivars file into database after removing all
+        """ Loads cultivars file into database after removing all 
             existing entries."""
         self.logger.debug("Loading cultivars file")
 
@@ -533,7 +533,7 @@ class CoordinatorManager(StateMachineManager):
             models.CultivarModel.objects.create(json=json.dumps(cultivar))
 
     def load_cultivation_methods_file(self) -> None:
-        """ Loads cultivation methods file into database after removing all
+        """ Loads cultivation methods file into database after removing all 
             existing entries. """
         self.logger.debug("Loading cultivation methods file")
 
@@ -554,7 +554,7 @@ class CoordinatorManager(StateMachineManager):
             )
 
     def load_recipe_files(self) -> None:
-        """Loads recipe files into database via recipe manager create or update
+        """Loads recipe files into database via recipe manager create or update 
         function."""
         self.logger.debug("Loading recipe files")
 
@@ -570,8 +570,8 @@ class CoordinatorManager(StateMachineManager):
                     self.logger.error(error)
 
     def load_peripheral_setup_files(self) -> None:
-        """Loads peripheral setup files from codebase into database by creating new
-        entries after deleting existing entries. Verification depends on sensor and
+        """Loads peripheral setup files from codebase into database by creating new 
+        entries after deleting existing entries. Verification depends on sensor and 
         actuator variables."""
         self.logger.info("Loading peripheral setup files")
 
@@ -601,8 +601,8 @@ class CoordinatorManager(StateMachineManager):
             )
 
     def load_controller_setup_files(self) -> None:
-        """Loads controller setup files from codebase into database by creating new
-        entries after deleting existing entries. Verification depends on sensor and
+        """Loads controller setup files from codebase into database by creating new 
+        entries after deleting existing entries. Verification depends on sensor and 
         actuator variables."""
         self.logger.info("Loading controller setup files")
 
@@ -631,7 +631,7 @@ class CoordinatorManager(StateMachineManager):
             )
 
     def load_device_config_files(self) -> None:
-        """Loads device config files from codebase into database by creating new entries
+        """Loads device config files from codebase into database by creating new entries 
         after deleting existing entries. Verification depends on peripheral setups. """
         self.logger.info("Loading device config files")
 
@@ -825,8 +825,7 @@ class CoordinatorManager(StateMachineManager):
                     "config. Validator should have caught this."
                 )
                 continue
-            print("this")
-            print(controller_setup_dict)
+
             # Get controller module and class name
             module_name = (
                 "device.controllers.modules." + controller_setup_dict["module_name"]

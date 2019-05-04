@@ -1,5 +1,0 @@
-RESET = "Reset"
-SHUTDOWN = "Shutdown"
-START = "Start"
-STOP = "Stop"
-LOAD = "Load"

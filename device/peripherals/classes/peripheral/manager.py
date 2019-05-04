@@ -223,8 +223,8 @@ class PeripheralManager(StateMachineManager):
                 break
 
     def run_init_mode(self) -> None:
-        """Runs init mode. Executes child class initialize function, checks for any
-        resulting transitions (e.g. errors) then transitions to setup mode on the
+        """Runs init mode. Executes child class initialize function, checks for any 
+        resulting transitions (e.g. errors) then transitions to setup mode on the 
         next state machine update."""
         self.logger.info("Entered INIT")
 
@@ -291,8 +291,8 @@ class PeripheralManager(StateMachineManager):
             time.sleep(0.100)
 
     def run_calibrate_mode(self) -> None:
-        """Runs calibrate mode. Performs same function as normal mode except for
-        variable reporting functions only update peripheral state instead of both
+        """Runs calibrate mode. Performs same function as normal mode except for 
+        variable reporting functions only update peripheral state instead of both 
         peripheral and environment."""
         self.logger.info("Entered CALIBRATE")
 
@@ -346,7 +346,7 @@ class PeripheralManager(StateMachineManager):
             time.sleep(0.100)
 
     def run_error_mode(self) -> None:
-        """Runs error mode. Clears reported values then waits for new
+        """Runs error mode. Clears reported values then waits for new 
         events and transitions. Tries to reset every hour."""
         self.logger.info("Entered ERROR")
 
@@ -390,7 +390,7 @@ class PeripheralManager(StateMachineManager):
         self.mode = modes.INIT
 
     def run_shutdown_mode(self) -> None:
-        """Runs shutdown mode. Executes child class shutdown function then waits for
+        """Runs shutdown mode. Executes child class shutdown function then waits for 
         new events and transitions. Logs shutdown state every update interval."""
         self.logger.info("Entered SHUTDOWN")
 
@@ -438,7 +438,7 @@ class PeripheralManager(StateMachineManager):
     ##### EVENT FUNCTIONS ##############################################################
 
     def create_event(self, request: Dict[str, Any]) -> Tuple[str, int]:
-        """Creates a new event, checks for matching event type, pre-processes request,
+        """Creates a new event, checks for matching event type, pre-processes request, 
         then adds to event queue."""
         self.logger.debug("Creating event request: `{}`".format(request))
 
@@ -467,12 +467,12 @@ class PeripheralManager(StateMachineManager):
     def create_peripheral_specific_event(
         self, request: Dict[str, Any]
     ) -> Tuple[str, int]:
-        """Processes peripheral specific event. This method should be
+        """Processes peripheral specific event. This method should be 
         overridden in child class."""
         return "Unknown event request type", 400
 
     def check_events(self) -> None:
-        """Checks for a new event. Only processes one event per call, even if there are
+        """Checks for a new event. Only processes one event per call, even if there are 
         multiple in the queue. Events are processed first-in-first-out (FIFO)."""
 
         # Check for new events
@@ -506,7 +506,7 @@ class PeripheralManager(StateMachineManager):
             self.check_peripheral_specific_events(request)
 
     def check_peripheral_specific_events(self, request: Dict[str, Any]) -> None:
-        """Checks peripheral specific events. This method should be
+        """Checks peripheral specific events. This method should be 
         overwritten in child class."""
         type_ = request.get("type")
         self.logger.error("Invalid event request type in queue: {}".format(type_))

@@ -33,7 +33,7 @@ class SHT25Manager(manager.PeripheralManager):
 
     @temperature.setter
     def temperature(self, value: float) -> None:
-        """Sets temperature value in shared state. Does not update environment from
+        """Sets temperature value in shared state. Does not update environment from 
         calibration mode."""
         self.state.set_peripheral_reported_sensor_value(
             self.name, self.temperature_name, value
@@ -55,7 +55,7 @@ class SHT25Manager(manager.PeripheralManager):
 
     @humidity.setter
     def humidity(self, value: float) -> None:
-        """Sets humidity value in shared state. Does not update environment from
+        """Sets humidity value in shared state. Does not update environment from 
         calibration mode."""
         self.state.set_peripheral_reported_sensor_value(
             self.name, self.humidity_name, value
@@ -97,7 +97,7 @@ class SHT25Manager(manager.PeripheralManager):
         self.logger.debug("No setup required")
 
     def update_peripheral(self) -> None:
-        """Updates sensor by reading temperature and humidity values then
+        """Updates sensor by reading temperature and humidity values then 
         reports them to shared state."""
 
         # Read temperature
@@ -125,7 +125,7 @@ class SHT25Manager(manager.PeripheralManager):
 
     def reset_peripheral(self) -> None:
         """Resets sensor."""
-        self.logger.info("Resetting!!!")
+        self.logger.info("Resetting")
 
         # Clear reported values
         self.clear_reported_values()

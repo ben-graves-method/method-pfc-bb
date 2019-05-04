@@ -89,7 +89,7 @@ class DAC5578Driver:
             raise exceptions.WriteOutputError(logger=self.logger) from e
 
     def write_outputs(self, outputs: dict, retry: bool = True) -> None:
-        """Sets output channels to output percents. Only sets mux once.
+        """Sets output channels to output percents. Only sets mux once. 
         Keeps thread locked since relies on mux not changing."""
         self.logger.debug("Writing outputs: {}".format(outputs))
 

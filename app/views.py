@@ -11,6 +11,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.db.models.query import QuerySet
 
+from django.conf import settings
+
 # Import django rest modules
 from rest_framework import views, viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -26,14 +28,19 @@ from app import forms, models, serializers, viewers
 from device.utilities import logger, system
 
 # Initialize project root
-PROJECT_ROOT = os.getenv("PROJECT_ROOT")
+PROJECT_ROOT = str(os.getenv("PROJECT_ROOT", ""))
 
 # Initialize file paths
 APP_NAME = "app"
-LOG_DIR = "data/logs/"
+# LOG_DIR = "data/logs/"
+LOG_DIR = settings.LOG_DIR
+
 IMAGE_PATH = PROJECT_ROOT + "/data/images/*.png"
-STORED_IMAGE_PATH = PROJECT_ROOT + "/data/images/stored/*.png"
-DEVICE_CONFIG_PATH = "data/config/device.txt"
+# STORED_IMAGE_PATH = PROJECT_ROOT + "/data/images/stored/*.png"
+STORED_IMAGE_PATH = settings.DATA_PATH + "/images/stored/*.png"
+
+# DEVICE_CONFIG_PATH = "data/config/device.txt"
+DEVICE_CONFIG_PATH = os.path.join(settings.DATA_PATH, "config", "device.txt")
 
 
 ##### API Views ########################################################################
@@ -394,7 +401,6 @@ class Resource(views.APIView):
             "status": resource_manager.status,
             "free_disk": resource_manager.free_disk,
             "free_memory": resource_manager.free_memory,
-            "database_size": resource_manager.database_size,
         }
 
         # Return response
@@ -1073,3 +1079,86 @@ def change_password(request: Request) -> render:
     else:
         form = PasswordChangeForm(request.user)
     return render(request, "accounts/change_password.html", {"form": form})
+
+
+# just for MW demo
+# ------------------------------------------------------------------------------
+class LEDViewSet(viewsets.ModelViewSet):
+    # Initialize logger
+    logger = logger.Logger("LEDViewSet", "app")
+
+    # --------------------------------------------------------------------------
+    def send_event(self, etype: str, value: str = None) -> Response:
+        v = ""
+        if value is not None and value is not "":
+            v = ',"value":"' + value + '"'
+
+        edict = {
+            "recipient": '{"type":"Peripheral","name":"LEDPanel-Top"}',
+            "request": '{"type":"' + etype + '"' + v + "}",
+        }
+
+        event_viewer = viewers.EventViewer()
+        message, status = event_viewer.create(edict)
+
+        response = {"message": message}
+        return Response(response, status=status)
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the manual mode command
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def manual(self, request: Request) -> Response:
+        self.logger.debug("Put LED in manual mode via REST API.")
+        return self.send_event(etype="Enable Manual Mode")
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the reset event
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def reset(self, request: Request) -> Response:
+        self.logger.debug("Reset LED.")
+        return self.send_event(etype="Reset")
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the set channel event
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def set_channel(self, request: Request) -> Response:
+
+        # Get parameters
+        try:
+            rdict = request.data
+        except Exception as e:
+            message = "Unable to create request dict: {}".format(e)
+            return Response(message, 400)
+        self.logger.debug("debubrob rdict={}".format(rdict))
+
+        channel = rdict.get("channel", "B")
+        percent = rdict.get("percent", "50")
+        self.logger.debug(
+            "Set LED channel via REST API, channel={}, percent={}".format(
+                channel, percent
+            )
+        )
+        # set channel event: B,50
+        val = "{},{}".format(channel, percent)
+        return self.send_event(etype="Set Channel", value=val)
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the Turn On event
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def turn_on(self, request: Request) -> Response:
+        self.logger.debug("Turn On LED.")
+        return self.send_event(etype="Turn On")
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the Turn Off event
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def turn_off(self, request: Request) -> Response:
+        self.logger.debug("Turn Off LED.")
+        return self.send_event(etype="Turn Off")
+
+    # --------------------------------------------------------------------------
+    # Send LED peripheral the fade event
+    @list_route(methods=["POST"], permission_classes=[IsAuthenticated, IsAdminUser])
+    def fade(self, request: Request) -> Response:
+        self.logger.debug("Fade LED.")
+        return self.send_event(etype="Fade")

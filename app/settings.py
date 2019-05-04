@@ -44,26 +44,38 @@ INSTALLED_APPS = [
     "device.resource",
     "device.network",
     "device.upgrade",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+# Allow all cross origin requests.
+# Required to call our REST API from a browser.
+# https://github.com/ottoyiu/django-cors-headers/#configuration
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+# Where should stuff get stored. Defaults to the data directory under the project roots
 DATA_PATH = os.getenv(
     "STORAGE_LOCATION", os.path.join(os.path.dirname(BASE_DIR), "data")
 )
 
+# Static files are handled differently, since they don't change.
+STATIC_PATH = os.path.join(BASE_DIR, "data", "staticfiles")
+
 # Configure static file storage
 STATIC_URL = "/app/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = STATIC_PATH  # os.path.join(DATA_PATH, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TEMPUS_DOMINUS_LOCALIZE = True
@@ -88,20 +100,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "app.wsgi.application"
 
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "openag_brain",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": DATA_PATH + "/db/openag_brain.sqlite",
         "USER": "openag",
         "PASSWORD": "openag",
-        "HOST": "localhost",
-        "PORT": "",
         "TEST": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "test_openag_brain",
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": DATA_PATH + "/db/test_openag_brain.sqlite",
             "USER": "openag",
-            "PASSWORD": "openag",
         },
     }
 }
@@ -115,7 +123,8 @@ if LOG_LEVEL == "DEBUG":
     DEBUG = True
 
 # Set log directory
-LOG_DIR = os.path.dirname(BASE_DIR) + "/data/logs/"
+# LOG_DIR = os.path.dirname(BASE_DIR) + "/data/logs/"
+LOG_DIR = DATA_PATH + "/logs/"
 
 # Make sure log directory exists
 if not os.path.exists(LOG_DIR):
@@ -261,20 +270,24 @@ LOGGING = {
         "app": {"handlers": ["app_console", "app_file"], "level": LOG_LEVEL},
         "device": {"handlers": ["device_console", "device_file"], "level": LOG_LEVEL},
         "coordinator": {
-            "handlers": ["device_console", "coordinator_file"], "level": LOG_LEVEL
+            "handlers": ["device_console", "coordinator_file"],
+            "level": LOG_LEVEL,
         },
         "peripherals": {
-            "handlers": ["device_console", "peripheral_files"], "level": LOG_LEVEL
+            "handlers": ["device_console", "peripheral_files"],
+            "level": LOG_LEVEL,
         },
         "controllers": {
-            "handlers": ["device_console", "controller_files"], "level": LOG_LEVEL
+            "handlers": ["device_console", "controller_files"],
+            "level": LOG_LEVEL,
         },
         "event": {"handlers": ["device_console", "event_file"], "level": LOG_LEVEL},
         "recipe": {"handlers": ["device_console", "recipe_file"], "level": LOG_LEVEL},
         "i2c": {"handlers": ["device_console", "i2c_file"], "level": LOG_LEVEL},
         "iot": {"handlers": ["device_console", "iot_file"], "level": LOG_LEVEL},
         "resource": {
-            "handlers": ["device_console", "resource_file"], "level": LOG_LEVEL
+            "handlers": ["device_console", "resource_file"],
+            "level": LOG_LEVEL,
         },
         "network": {"handlers": ["device_console", "network_file"], "level": LOG_LEVEL},
         "system": {"handlers": ["device_console", "system_file"], "level": LOG_LEVEL},

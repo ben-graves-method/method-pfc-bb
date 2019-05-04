@@ -133,7 +133,7 @@ class EnvironmentViewer:
         self.actuator_summary = self.get_environment_summary("actuator")
 
     def get_environment_summary(self, peripheral_type: str) -> Dict[str, str]:
-        """Gets environment summary of current reported --> desired value for each
+        """Gets environment summary of current reported --> desired value for each 
         variable in shared state."""
         self.logger.debug("Getting environment summary")
 
@@ -161,7 +161,6 @@ class EnvironmentViewer:
                     "`peripheral_type` must be either `sensor` or `actuator`"
                 )
 
-            # NOTE: get_sensor_variable_info and get_actuator_variable_info retrun {} not None for variables that dont exist so I have added the or info == {}
             if info is None or info == {}:
                 continue
 

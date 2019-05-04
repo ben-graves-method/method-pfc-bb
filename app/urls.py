@@ -51,6 +51,7 @@ router.register(r"system", views.SystemViewSet, base_name="api-system")
 router.register(r"network", views.NetworkViewSet, base_name="api-network")
 router.register(r"upgrade", views.UpgradeViewSet, base_name="api-upgrade")
 router.register(r"iot", views.IotViewSet, base_name="api-iot")
+router.register(r"led", views.LEDViewSet, base_name="api-led")
 
 # Initialize url pattern parameters
 login_settings = {"template_name": "login.html", "redirect_authenticated_user": True}
@@ -75,6 +76,4 @@ urlpatterns = [
     url(r"^$", views.Connect.as_view(), name="connect"),
     url(r"^upgrade/$", views.Upgrade.as_view(), name="upgrade"),
     url(r"^connect_advanced/$", connect_advanced_view, name="connect_advanced"),
-] + static(
-    settings.STATIC_URL, document_root=settings.STATIC_ROOT
-)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

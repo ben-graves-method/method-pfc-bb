@@ -1,6 +1,6 @@
 [
 	{
-		"key": "air_temperature_celcius",
+		"key": "air_temperature_celsius",
 		"info": {
 			"name": {
 				"brief": "Air Temp",
@@ -8,7 +8,7 @@
 			},
 			"unit": {
 				"brief": "C",
-				"verbose": "Celcius",
+				"verbose": "Celsius",
 				"type": "number"
 			}
 		}
@@ -84,7 +84,7 @@
 		}
 	},
 	{
-		"key": "water_temperature_celcius",
+		"key": "water_temperature_celsius",
 		"info": {
 			"name": {
 				"brief": "Water Temp",
@@ -92,7 +92,7 @@
 			},
 			"unit": {
 				"brief": "C",
-				"verbose": "Celcius",
+				"verbose": "Celsius",
 				"type": "number"
 			}
 		}
@@ -182,7 +182,7 @@
 		}
 	},
 	{
-		"key": "soil_temperature_celcius",
+		"key": "soil_temperature_celsius",
 		"info": {
 			"name": {
 				"brief": "Soil Temp",
@@ -190,13 +190,13 @@
 			},
 			"unit": {
 				"brief": "C",
-				"verbose": "Celcius",
+				"verbose": "Celsius",
 				"type": "number"
 			}
 		}
 	},
 	{
-		"key": "tray_temperature_celcius",
+		"key": "tray_temperature_celsius",
 		"info": {
 			"name": {
 				"brief": "Tray Temp",
@@ -204,7 +204,49 @@
 			},
 			"unit": {
 				"brief": "C",
-				"verbose": "Celcius",
+				"verbose": "Celsius",
+				"type": "number"
+			}
+		}
+	},
+	{
+		"key": "top_tray_temperature_celsius",
+		"info": {
+			"name": {
+				"brief": "Top Tray Temp",
+				"verbose": "Top Tray Temperature"
+			},
+			"unit": {
+				"brief": "C",
+				"verbose": "Celsius",
+				"type": "number"
+			}
+		}
+	},
+	{
+		"key": "middle_tray_temperature_celsius",
+		"info": {
+			"name": {
+				"brief": "Middle Tray Temp",
+				"verbose": "Middle Tray Temperature"
+			},
+			"unit": {
+				"brief": "C",
+				"verbose": "Celsius",
+				"type": "number"
+			}
+		}
+	},
+	{
+		"key": "bottom_tray_temperature_celsius",
+		"info": {
+			"name": {
+				"brief": "Bottom Tray Temp",
+				"verbose": "Bottom Tray Temperature"
+			},
+			"unit": {
+				"brief": "C",
+				"verbose": "Celsius",
 				"type": "number"
 			}
 		}

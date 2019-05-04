@@ -24,4 +24,4 @@ fi
 
 # Install python requirements
 pip3.6 download -d $PROJECT_ROOT/venv/pip_download -r $PROJECT_ROOT/requirements.txt
-pip3.6 install -f $PROJECT_ROOT/venv/pip_download -r $PROJECT_ROOT/requirements.txt
+pip3.6 install -f $PROJECT_ROOT/venv/pip_download -r $PROJECT_ROOT/requirements.txt 

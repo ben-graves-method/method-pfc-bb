@@ -1,2 +1,0 @@
-RESET = "Reset"
-SHUTDOWN = "Shutdown"
