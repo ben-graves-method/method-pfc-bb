@@ -31,6 +31,8 @@ class ArduinoCommsDriver:
 
         self.pins = pins
 
+        self.name = name
+
         # Initialize I2C
         try:
             self.i2c = I2C(
@@ -58,14 +60,14 @@ class ArduinoCommsDriver:
     #     self.i2c.write(bytes("*r_{}_{}_{}^".format(self.address, register, message), 'utf-8'))
 
     def set_high(self) -> None:
-        self.logger.debug("Setting pins {} high".format(pins))
+        self.logger.debug("Setting pins {} high".format(self.pins))
         try:
             self.write_output(1)  # type: ignore
         except exceptions.WriteOutputError as e:
             raise exceptions.SetHighError(logger=self.logger) from e
 
     def set_low(self) -> None:
-        self.logger.debug("Setting pins {} low".format(pins))
+        self.logger.debug("Setting pins {} low".format(self.pins))
         try:
             self.write_output(0)  # type: ignore
         except exceptions.WriteOutputError as e:

@@ -223,7 +223,7 @@ class LEDArduinoManager(manager.PeripheralManager):
             return
 
         # Update reported variables
-        self.update_reported_variables()
+        # self.update_reported_variables()
 
     def update_peripheral(self) -> None:
         """Updates peripheral if desired spectrum, intensity, or distance value changes."""
@@ -436,7 +436,7 @@ class LEDArduinoManager(manager.PeripheralManager):
         # Turn on driver and update reported variables
         try:
             self.channel_setpoints = self.driver.turn_on()
-            self.update_reported_variables()
+            # self.update_reported_variables()
         except exceptions.DriverError as e:
             self.mode = modes.ERROR
             message = "Unable to turn on: {}".format(e)
@@ -472,7 +472,7 @@ class LEDArduinoManager(manager.PeripheralManager):
         # Turn off driver and update reported variables
         try:
             self.channel_setpoints = self.driver.turn_off()
-            self.update_reported_variables()
+            # self.update_reported_variables()
         except exceptions.DriverError as e:
             self.mode = modes.ERROR
             message = "Unable to turn off: {}".format(e)

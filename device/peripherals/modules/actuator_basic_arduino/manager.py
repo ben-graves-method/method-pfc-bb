@@ -21,6 +21,8 @@ class BasicActuatorManager(manager.PeripheralManager):
         # Initialize parent class
         super().__init__(*args, **kwargs)
 
+        self.is_active_high = True
+
         # Initialize communication variables
         self.pin = self.communication.get("pin")
 
@@ -31,6 +33,11 @@ class BasicActuatorManager(manager.PeripheralManager):
         act = self.variables.get("actuator")
         if act is not None:
             self.output_name = act.get("output_variable")
+
+        # Set default sampling interval and heartbeat
+        self.default_sampling_interval = 1  # second
+        self.heartbeat = 60  # seconds
+        self.prev_update = 0  # timestamp
 
     @property
     def desired_output(self) -> Optional[bool]:

@@ -77,7 +77,7 @@ class LEDArduinoDriver:
         # Initialize driver parameters
         self.panel_properties = panel_properties
         self.i2c_lock = i2c_lock
-        self.simulate = simulate
+        self.simulate = False
 
         # Initialize logger
         logname = "Driver({})".format(name)
@@ -110,20 +110,23 @@ class LEDArduinoDriver:
         message2 = "active panels, expected {}".format(self.num_expected_panels)
         self.logger.debug(message + message2)
 
-    def turn_on(self) -> Dict[str, float]:
+    def turn_on(self) -> None:
         """Turns on leds."""
+        for panel in self.panels:
+            panel.driver.write_output(255)
         self.logger.debug("Turning on")
-        channel_outputs = self.build_channel_outputs(100)
-        self.set_outputs(channel_outputs)
+        # channel_outputs = self.build_channel_outputs(100)
+        # self.set_outputs(channel_outputs)
+        # return channel_outputs
 
-        return channel_outputs
-
-    def turn_off(self) -> Dict[str, float]:
+    def turn_off(self) -> None:
         """Turns off leds."""
+        for panel in self.panels:
+            panel.driver.write_output(0)
         self.logger.debug("Turning off")
-        channel_outputs = self.build_channel_outputs(0)
-        self.set_outputs(channel_outputs)
-        return channel_outputs
+        # channel_outputs = self.build_channel_outputs(0)
+        # self.set_outputs(channel_outputs)
+        # return channel_outputs
 
     def set_spd(
         self, desired_distance: float, desired_intensity: float, desired_spectrum: Dict
@@ -188,12 +191,17 @@ class LEDArduinoDriver:
             # Scale setpoints
             dac_setpoints = self.translate_setpoints(converted_outputs)
 
+
+
             # Set outputs on panel
             try:
-                panel.driver.write_outputs(dac_setpoints)  # type: ignore
-            except AttributeError:
+                panel.driver.write_output(dac_setpoints)  # type: ignore
+            except AttributeError as e:
                 message = "Unable to set outputs on `{}`".format(panel.name)
                 self.logger.error(message + ", panel not initialized")
+                self.logger.error(e)
+                self.logger.error(dac_setpoints)
+                self.logger.error(converted_outputs)
             except Exception as e:
                 message = "Unable to set outputs on `{}`".format(panel.name)
                 self.logger.exception(message)
@@ -242,9 +250,10 @@ class LEDArduinoDriver:
             # Set output on panel
             try:
                 panel.driver.write_output(channel_number, dac_setpoint)  # type: ignore
-            except AttributeError:
+            except AttributeError as e:
                 message = "Unable to set output on `{}`".format(panel.name)
-                self.logger.error(message + ", panel not initialized")
+                self.logger.error(message + ", panel not initialized ")
+                self.logger.error(e)
             except Exception as e:
                 message = "Unable to set output on `{}`".format(panel.name)
                 self.logger.exception(message)
