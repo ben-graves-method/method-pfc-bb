@@ -391,6 +391,8 @@ class LEDArduinoManager(manager.PeripheralManager):
             return self.turn_off()
         elif request["type"] == events.SET_CHANNEL:
             return self.set_channel(request)
+        elif request["type"] == events.SET_PERCENTAGE:
+            return self.set_percentage(request)
         elif request["type"] == events.FADE:
             return self.fade()
         else:
@@ -404,6 +406,8 @@ class LEDArduinoManager(manager.PeripheralManager):
             self._turn_off()
         elif request["type"] == events.SET_CHANNEL:
             self._set_channel(request)
+        elif request["type"] == events.SET_PERCENTAGE:
+            self._set_percentage(request)
         elif request["type"] == events.FADE:
             self._fade()
         else:
@@ -556,6 +560,61 @@ class LEDArduinoManager(manager.PeripheralManager):
             self.mode = modes.ERROR
             message = "Unable to set channel, unhandled exception"
             self.logger.exception(message)
+
+    def set_percentage(self, request: Dict[str, Any]) -> Tuple[str, int]:
+        """Pre-processes set channel event request."""
+        self.logger.debug("Pre-processing set channel event request")
+
+        # Require mode to be in manual
+        if self.mode != modes.MANUAL:
+            message = "Must be in manual mode"
+            self.logger.debug(message)
+            return message, 400
+
+        # Get request parameters
+        try:
+            percent = int(request["value"])
+        except KeyError as e:
+            message = "Unable to set percent, invalid request parameter: {}".format(e)
+            self.logger.debug(message)
+            return message, 400
+        except ValueError as e:
+            message = "Unable to set percent, {}".format(e)
+            self.logger.debug(message)
+            return message, 400
+        except:
+            message = "Unable to set percent, unhandled exception"
+            self.logger.exception(message)
+            return message, 500
+
+        # Verify percent
+        if percent < 0 or percent > 100:
+            message = "Unable to set percent, invalid intensity: {:.0F}%".format(
+                percent
+            )
+            self.logger.debug(message)
+            return message, 400
+
+        # Add event request to event queue
+        request = {"type": events.SET_PERCENTAGE, "percentage": percent}
+        self.event_queue.put(request)
+
+        return "Setting to {:.0F}%".format(percent), 200
+
+    def _set_percentage(self, request: Dict[str, Any]):
+        """Processes set percentage event request."""
+        self.logger.debug("Processing set percentage event")
+
+        # Require mode to be in manual
+        if self.mode != modes.MANUAL:
+            self.logger.critical("Tried to set channel from {} mode".format(self.mode))
+
+        percentage = request["percent"]
+
+        percentage = float(percentage)
+        value = int((255/100)*percentage)
+
+        self.driver.write_output(value)
 
     def fade(self) -> Tuple[str, int]:
         """Pre-processes fade event request."""

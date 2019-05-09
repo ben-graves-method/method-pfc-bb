@@ -217,6 +217,16 @@
 		    "is_manual": true
 		},
 		{
+		    "name": "Set Percentage",
+		    "description": "Set lights to certain percentage.",
+		    "value": {
+                "default": "100",
+                "unit": "%"
+            },
+		    "sequence": null,
+		    "is_manual": true
+		},
+		{
 		    "name": "Fade",
 		    "description": "Sequentially fades individual channels up/down.",
 		    "value": null,

@@ -31,7 +31,7 @@ class CameraManager(manager.PeripheralManager):  # type: ignore
 
         # Initialize sampling parameters
         self.min_sampling_interval = 120  # seconds
-        self.default_sampling_interval = 3600  # every hour
+        self.default_sampling_interval = 60  # every hour
 
         self.logger.debug("Instantiating")
 
