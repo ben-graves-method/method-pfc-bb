@@ -18,7 +18,6 @@ class ArduinoCommsDriver:
         self,
         name: str,
         i2c_lock: threading.RLock,
-        pins: List[int]
     ) -> None:
         """Initializes ArduinoComms"""
 
@@ -28,8 +27,6 @@ class ArduinoCommsDriver:
 
         self.bus = 2
         self.address = 0x08
-
-        self.pins = pins
 
         self.name = name
 
@@ -45,10 +42,21 @@ class ArduinoCommsDriver:
         except I2CError as e:
             raise exceptions.InitError(logger=self.logger) from e
 
-    def write_output(self, value):
-        for pin in self.pins:
-            self.logger.debug("{} write_output: *w_{}_{}^".format(self.name, pin, value))
+    def write_output(self, value, pin=None, pins=None):
+        if pin:
             self.i2c.write(bytes("*w_{}_{}^".format(pin, value), 'utf-8'))
+            self.logger.debug("{} write_output: *w_{}_{}^".format(self.name, pin, value))        
+        elif pins:
+            for p in pins:
+                self.i2c.write(bytes("*w_{}_{}^".format(p, value), 'utf-8'))
+                self.logger.debug("{} write_output: *w_{}_{}^".format(self.name, p, value))
+        else:
+            raise exceptions.WriteOutputError(logger=self.logger)
+        # for pin in self.pins:
+        #     self.logger.debug("{} write_output: *w_{}_{}^".format(self.name, pin, value))
+        #     self.i2c.write(bytes("*w_{}_{}^".format(pin, value), 'utf-8'))
+
+
 
     # def read_register(self, register):
     #     self.i2c.write(bytes("*r_{}_{}^".format(self.address, register), 'utf-8'))
@@ -59,16 +67,37 @@ class ArduinoCommsDriver:
     # def write_register(self, register, message):
     #     self.i2c.write(bytes("*r_{}_{}_{}^".format(self.address, register, message), 'utf-8'))
 
-    def set_high(self) -> None:
-        self.logger.debug("Setting pins {} high".format(self.pins))
-        try:
-            self.write_output(1)  # type: ignore
-        except exceptions.WriteOutputError as e:
-            raise exceptions.SetHighError(logger=self.logger) from e
+    def write_outputs(self, output_values):
+        for pin, value in output_values.items():
+            self.write_output(value, pin=pin)
 
-    def set_low(self) -> None:
-        self.logger.debug("Setting pins {} low".format(self.pins))
-        try:
-            self.write_output(0)  # type: ignore
-        except exceptions.WriteOutputError as e:
-            raise exceptions.SetLowError(logger=self.logger) from e
+
+    def set_high(self, pin=None, pins=None) -> None:
+        if pin:
+            self.write_output(255, pin=pin)
+            self.logger.debug("Setting pin {} high".format(pin))
+        elif pins:
+            self.write_output(255, pins=pin)
+            self.logger.debug("Setting pins {} high".format(pins))
+        else:
+            raise exceptions.SetHighError(logger=self.logger)
+
+        # try:
+        #     self.write_output(1)  # type: ignore
+        # except exceptions.WriteOutputError as e:
+        #     raise exceptions.SetHighError(logger=self.logger) from e
+
+    def set_low(self, pin=None, pins=None) -> None:
+        if pin:
+            self.write_output(0, pin=pin)
+            self.logger.debug("Setting pins {} low".format(pin))
+        elif pins:
+            self.write_output(0, pin=pins)
+            self.logger.debug("Setting pins {} low".format(pins))
+        else:
+            raise exceptions.SetLowError(logger=self.logger)
+        
+        # try:
+        #     self.write_output(0)  # type: ignore
+        # except exceptions.WriteOutputError as e:
+        #     raise exceptions.SetLowError(logger=self.logger) from e

@@ -50,7 +50,6 @@ class LEDArduinoPanel(object):
             self.driver = ArduinoCommsDriver(
                 name=self.full_name,
                 i2c_lock=self.i2c_lock,
-                pins=self.pins
             )
             self.is_shutdown = False
         except Exception as e:
@@ -112,21 +111,22 @@ class LEDArduinoDriver:
 
     def turn_on(self) -> None:
         """Turns on leds."""
-        for panel in self.panels:
-            panel.driver.write_output(255)
+        # for panel in self.panels:
+            # panel.driver.write_output(255)
+        channel_outputs = self.build_channel_outputs(100)
         self.logger.debug("Turning on")
-        # channel_outputs = self.build_channel_outputs(100)
-        # self.set_outputs(channel_outputs)
-        # return channel_outputs
+        
+        self.set_outputs(channel_outputs)
+        return channel_outputs
 
     def turn_off(self) -> None:
         """Turns off leds."""
-        for panel in self.panels:
-            panel.driver.write_output(0)
+        # for panel in self.panels:
+        #     panel.driver.write_output(0)
         self.logger.debug("Turning off")
-        # channel_outputs = self.build_channel_outputs(0)
-        # self.set_outputs(channel_outputs)
-        # return channel_outputs
+        channel_outputs = self.build_channel_outputs(0)
+        self.set_outputs(channel_outputs)
+        return channel_outputs
 
     def set_spd(
         self, desired_distance: float, desired_intensity: float, desired_spectrum: Dict
@@ -189,13 +189,12 @@ class LEDArduinoDriver:
         for panel in self.panels:
 
             # Scale setpoints
-            dac_setpoints = self.translate_setpoints(converted_outputs)
-
-
+            # dac_setpoints = self.translate_setpoints(converted_outputs) # METHOD REMOVING
+            dac_setpoints = converted_outputs
 
             # Set outputs on panel
             try:
-                panel.driver.write_output(dac_setpoints)  # type: ignore
+                panel.driver.write_outputs(dac_setpoints)  # type: ignore
             except AttributeError as e:
                 message = "Unable to set outputs on `{}`".format(panel.name)
                 self.logger.error(message + ", panel not initialized")
@@ -245,11 +244,12 @@ class LEDArduinoDriver:
         for panel in self.panels:
 
             # Scale setpoint
-            dac_setpoint = self.translate_setpoint(par_setpoint)
+            # dac_setpoint = self.translate_setpoint(par_setpoint) # METHOD REMOVING
+            dac_setpoint = par_setpoint
 
             # Set output on panel
             try:
-                panel.driver.write_output(channel_number, dac_setpoint)  # type: ignore
+                panel.driver.write_output(dac_setpoint, pin=channel_number)  # type: ignore
             except AttributeError as e:
                 message = "Unable to set output on `{}`".format(panel.name)
                 self.logger.error(message + ", panel not initialized ")
@@ -304,6 +304,8 @@ class LEDArduinoDriver:
         dac_setpoints = {}
         for key, par_setpoint in par_setpoints.items():
             dac_setpoint = maths.interpolate(par_list, dac_list, par_setpoint)
+            self.logger.info(dac_setpoint)
+            dac_setpoint = dac_setpoint * 255 / 100 # scale to Arduino 0-255
             dac_setpoints[key] = dac_setpoint
 
         # Successfully translated dac setpoints
@@ -324,6 +326,14 @@ class LEDArduinoDriver:
 
         # Get dac setpint
         dac_setpoint = maths.interpolate(par_list, dac_list, par_setpoint)
+        dac_setpoint = dac_setpoint * 255 / 100 # scale to Arduino 0-255
 
         # Successfully translated dac setpoint
         return dac_setpoint  # type: ignore
+
+
+    ###### METHOD HELPER FUNCTION 
+
+    def map_to_255(value) -> float:
+        return (value * 255 / 100)
+    

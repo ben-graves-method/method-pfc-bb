@@ -80,7 +80,6 @@ class BasicActuatorManager(manager.PeripheralManager):
             self.driver = driver.ArduinoCommsDriver(
                 name=self.name,
                 i2c_lock=self.i2c_lock,
-                pins=[self.pin]
             )
         except exceptions.DriverError as e:
             self.logger.exception("Unable to initialize: {}".format(e))
@@ -152,9 +151,9 @@ class BasicActuatorManager(manager.PeripheralManager):
         """Sets driver on."""
         self.logger.debug("Setting on")
         if self.is_active_high:
-            self.driver.set_high()
+            self.driver.set_high(self.pin)
         else:
-            self.driver.set_low()
+            self.driver.set_low(self.pin)
         self.output = True
         self.health = 100.0
         self.prev_update = time.time()
@@ -163,9 +162,9 @@ class BasicActuatorManager(manager.PeripheralManager):
         """Sets driver off."""
         self.logger.debug("Setting off")
         if self.is_active_high:
-            self.driver.set_low()
+            self.driver.set_low(self.pin)
         else:
-            self.driver.set_high()
+            self.driver.set_high(self.pin)
         self.output = False
         self.health = 100.0
         self.prev_update = time.time()

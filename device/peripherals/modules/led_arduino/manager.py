@@ -609,12 +609,13 @@ class LEDArduinoManager(manager.PeripheralManager):
         if self.mode != modes.MANUAL:
             self.logger.critical("Tried to set channel from {} mode".format(self.mode))
 
-        percentage = request["percent"]
+        percentage = request["percentage"]
 
-        percentage = float(percentage)
-        value = int((255/100)*percentage)
+        # percentage = float(percentage)
+        # value = int((255/100)*percentage)
 
-        self.driver.write_output(value)
+        for channel_name in self.channel_names:
+            self.driver.set_output(channel_name, percentage)
 
     def fade(self) -> Tuple[str, int]:
         """Pre-processes fade event request."""

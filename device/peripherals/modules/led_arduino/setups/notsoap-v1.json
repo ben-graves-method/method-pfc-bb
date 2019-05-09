@@ -60,11 +60,11 @@
 	},
 	"properties": {
 		"channels": {
-			"FR": {"name": "Far Red", "type": "FR", "port": 0},
-			"R": {"name": "Red", "type": "R", "port": 2},
-			"G": {"name": "Green", "type": "G", "port": 5},
-			"B": {"name": "Blue", "type": "B", "port": 7},
-			"CW": {"name": "Cool White", "type": "CW", "port": 6},
+			"FR": {"name": "Far Red", "type": "FR", "port": 6},
+			"R": {"name": "Red", "type": "R", "port": 7},
+			"G": {"name": "Green", "type": "G", "port": 8},
+			"B": {"name": "Blue", "type": "B", "port": 3},
+			"CW": {"name": "Cool White", "type": "CW", "port": 5},
 			"WW": {"name": "Warm White", "type": "WW", "port": 4}
 		},
 		"intensity_map_cm_umol": {
@@ -76,7 +76,7 @@
 		},
 		"dac_map": {
         	"0": 0,
-        	"5": 0,
+        	"5": 0,	
         	"10": 4.0,
         	"15": 13.4,
         	"20": 23.8,

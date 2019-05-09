@@ -1,6 +1,6 @@
 {
     "format": "openag-standard-v1",
-    "name": "Arduino TESTING for Method PFC",
+    "name": "Method PFC v1.0",
     "uuid": "c2c42c95-9dcc-4186-aafe-d9ad1270dec6",
     "peripherals": [
         {
