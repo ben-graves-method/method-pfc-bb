@@ -1,22 +1,22 @@
 {
-	"name":  "Air Temperature PID Controller",
+	"name":  "Water Temperature PID Controller",
 	"version": "1",
-	"uuid": "dd05f901-69b0-4285-bdc3-83d3be5447b9",
+	"uuid": "421cc2a1-c552-4c5d-9ad7-d24a3e83be86",
 	"module_name": "pid.manager",
 	"class_name": "PIDControllerManager",
 	"parameters": {
 		"variables": {
 			"sensor_name": {
 				"type": "string", 
-				"default": "air_temperature_celsius"
+				"default": "water_temperature_celsius"
 			},
 			"positive_actuator_name": {
 				"type": "string",
-				"default": "air_heater_percent"
+				"default": "water_heater_percent"
 			},
 			"negative_actuator_name": {
 				"type": "string",
-				"default": "air_chiller_percent"
+				"default": "water_chiller_percent"
 			}
 		}
 	},

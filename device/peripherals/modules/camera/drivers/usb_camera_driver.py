@@ -142,6 +142,8 @@ class USBCameraDriver(CameraDriver):
     def capture_image_pygame(self, camera_path: str, image_path: str) -> None:
         """Captures an image with pygame."""
         self.logger.debug("Capturing image from camera: {}".format(camera_path))
+        self.logger.debug(self._simulate_capture(image_path))
+        self.logger.debug(image_path)
 
         # Capture image
         try:
@@ -156,15 +158,28 @@ class USBCameraDriver(CameraDriver):
 
             # Capture and save image
             if not self._simulate_capture(image_path):
-                resolution_array = self.resolution.split("x")
-                resolution = (int(resolution_array[0]), int(resolution_array[1]))
-                camera = pygame.camera.Camera(camera_path, resolution)
-                camera.start()
-                image = camera.get_image()
-                pygame.image.save(image, image_path)
-                camera.stop()
+                self.logger.debug(self.resolution)
+                os.system("bash -c \"streamer -s {} -o {}\"".format(self.resolution, image_path.replace("png", "jpeg")))
+                os.system("bash -c \"convert {} {}\"".format(image_path.replace("png", "jpeg"), image_path))
+                os.system("bash -c \"rm -r {}\"".format(image_path.replace("png", "jpeg")))
+
+                # resolution_array = self.resolution.split("x")
+                # resolution = (int(resolution_array[0]), int(resolution_array[1]))
+                # self.logger.debug("creating camera object")
+                # camera = pygame.camera.Camera(camera_path, (640,480))
+                # self.logger.debug("starting camera")
+                # camera.start()
+                # self.logger.debug(camera.query_image())
+                # self.logger.debug("taking photo")
+                # image = camera.get_image()
+                # self.logger.debug("saving photo")
+                # pygame.image.save(image, image_path)
+                # self.logger.debug("stopping camera")
+                # camera.stop()
+                self.logger.debug("DONE")
 
         except Exception as e:
+            self.logger.debug(e)
             raise exceptions.CaptureImageError(logger=self.logger) from e
 
     # def capture_image_fswebcam(self, camera_path: str, image_path: str) -> None:

@@ -1,0 +1,255 @@
+{
+    "format": "openag-standard-v1",
+    "name": "Method PFC v1.0",
+    "uuid": "c2c42c95-9dcc-4186-aafe-d9ad1270dec6",
+    "peripherals": [
+        {
+            "name": "LEDPanel-Top",
+            "type": "LEDArduino",
+            "uuid": "6068f753-3aaf-4666-bb99-b5e982b19059",
+            "parameters": {
+               "setup": {
+                    "name": "LED Panel Taurus Actuator",
+                    "file_name": "led_arduino/setups/notsoap-v1"
+                },
+                "variables": {
+                    "sensor": {
+                        "ppfd_umol_m2_s": "light_ppfd_umol_m2_s",
+                        "spectrum_nm_percent": "light_spectrum_nm_percent",
+                        "illumination_distance_cm": "light_illumination_distance_cm"
+                    },
+                    "actuator": {
+                        "channel_output_percents": "light_channel_output_percents"
+                    }
+                },
+                "communication": {
+                    "panels": [
+                        {"name": "LEDPanel-Top", "pins": [3,4,5,6,7,8], "active_low": false}
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Fan 1",
+            "type": "BasicArduinoActuator",
+            "uuid": "5bf61033-e7de-40ab-9701-e5b200ac69b1",
+            "parameters": {
+                "setup": {
+                    "name": "Fan 1",
+                    "file_name": "actuator_basic_arduino/setups/anypin"
+                },
+                "variables": {
+                    "sensor": null,
+                    "actuator": {
+                        "output_variable": "fan_percent"
+                    }
+                },
+                "communication": {
+                    "pin": 36
+                }
+            }
+        },
+        {
+            "name": "Fan 2",
+            "type": "BasicArduinoActuator",
+            "uuid": "5bf61033-e7de-40ab-9701-e5b200ac69b1",
+            "parameters": {
+                "setup": {
+                    "name": "Fan 2",
+                    "file_name": "actuator_basic_arduino/setups/anypin"
+                },
+                "variables": {
+                    "sensor": null,
+                    "actuator": {
+                        "output_variable": "air_fan_percent"
+                    }
+                },
+                "communication": {
+                    "pin": 34
+                }
+            }
+        },
+        {
+            "name": "Humidifier",
+            "type": "BasicArduinoActuator",
+            "uuid": "5bf61033-e7de-40ab-9701-e5b200ac69b1",
+            "parameters": {
+                "setup": {
+                    "name": "Humidifier",
+                    "file_name": "actuator_basic_arduino/setups/anypin"
+                },
+                "variables": {
+                    "sensor": null,
+                    "actuator": {
+                        "output_variable": "air_humidifier_percent"
+                    }
+                },
+                "communication": {
+                    "pin": 30
+                }
+            }
+        },
+        {
+            "name": "Water Heater",
+            "type": "BasicArduinoActuator",
+            "uuid": "5bf61033-e7de-40ab-9701-e5b200ac69b1",
+            "parameters": {
+                "setup": {
+                    "name": "Water Heater",
+                    "file_name": "actuator_basic_arduino/setups/anypin"
+                },
+                "variables": {
+                    "sensor": null,
+                    "actuator": {
+                        "output_variable": "water_heater_percent"
+                    }
+                },
+                "communication": {
+                    "pin": 32
+                }
+            }
+        },
+        {
+            "name": "SHT25",
+            "type": "SHT25",
+            "uuid": "23ed44ab-f810-4ca9-beab-82adcaf5f772",
+            "parameters": {
+                "setup": {
+                    "name": "SHT25 Temperature / Humidity Sensor Default",
+                    "file_name": "sht25/setups/default"
+                },
+                "variables": {
+                    "sensor": {
+                        "temperature_celsius": "air_temperature_celsius",
+                        "humidity_percent": "air_humidity_percent"
+                    },
+                    "actuator": null
+                },
+                "communication": {
+                    "bus": "default",
+                    "mux": "none",
+                    "channel": "none",
+                    "address": "0x40"
+                }
+            }
+        },
+        {
+            "name": "AtlasTemp",
+            "type": "AtlasTemp",
+            "uuid": "9e96cad1-fe29-4e2b-acdd-65d0288b50a3",
+            "parameters": {
+                "setup": {
+                    "name": "Atlas Temperature Sensor Default",
+                    "file_name": "atlas_temp/setups/default"
+                },
+                "variables": {
+                    "sensor": {
+                        "temperature": "water_temperature_celsius"
+                    },
+                    "actuator": null
+                },
+                "communication": {
+                    "bus": "default",
+                    "mux": "none",
+                    "channel": "none",
+                    "address": "0x66"
+                }
+            }
+        },
+        {
+            "name": "Camera-Top",
+            "type": "USBCamera",
+            "uuid": "228b8944-b2e5-4442-93b1-e1386089dd9d",
+            "parameters": {
+                "driver_module": "usb_camera_driver",
+		        "driver_class": "USBCameraDriver",
+                "setup": {
+                    "name": "ELP USB500W02M-L21 Camera ",
+                    "file_name": "camera/setups/elp_usb500w02ml21"
+                },
+                "variables": {
+                    "sensor": null,
+                    "actuator": null
+                },
+                "communication": null,
+                "num_cameras": 1
+            }
+        },
+        {
+            "name": "AtlasPH",
+            "type": "AtlasPH",
+            "uuid": "c29dd9ee-efe2-451e-82e4-4fe107bb6980",
+            "parameters": {
+                "setup": {
+                    "name": "Atlas Potential Hydrogen Sensor Default",
+                    "file_name": "atlas_ph/setups/default"
+                },
+                "variables": {
+                    "sensor": {
+                        "ph": "water_potential_hydrogen"
+                    },
+                    "actuator": null,
+                    "compensation": {
+                        "temperature_celsius": "water_temperature_celsius"
+                    }
+                },
+                "communication": {
+                    "bus": "default", 
+                    "mux": "none", 
+                    "channel": "none", 
+                    "address": "0x63"
+                }
+            }
+        }
+    ],
+    "controllers": [
+        {
+            "name": "FanController",
+            "type": "PIDController",
+            "uuid": "dd05f901-69b0-4285-bdc3-83d3be5447b9",
+            "parameters": {
+                "setup": {
+                    "name": "Fan Controller",
+                    "file_name": "pid/setups/air_temperature"
+                },
+                "variables": {
+                    "sensor_name": "air_temperature_celsius",
+                    "positive_actuator_name": null,
+                    "negative_actuator_name": "air_fan_percent"
+                }
+            }
+        },
+        {
+            "name": "HumidityController",
+            "type": "PIDController",
+            "uuid": "fa576d11-274e-4966-a730-378e2356aaa8",
+            "parameters": {
+                "setup": {
+                    "name": "Humidity Controller",
+                    "file_name": "pid/setups/air_humidity"
+                },
+                "variables": {
+                    "sensor_name": "air_humidity_percent",
+                    "positive_actuator_name": "air_humidifier_percent",
+                    "negative_actuator_name": null
+                }
+            }
+        },
+        {
+            "name": "WaterTemperatureController",
+            "type": "PIDController",
+            "uuid": "421cc2a1-c552-4c5d-9ad7-d24a3e83be86",
+            "parameters": {
+                "setup": {
+                    "name": "Water Temperature",
+                    "file_name": "pid/setups/water_temperature"
+                },
+                "variables": {
+                    "sensor_name": "water_temperature_celsius",
+                    "positive_actuator_name": "water_heater_percent",
+                    "negative_actuator_name": null
+                }
+            }
+        }
+    ]
+}

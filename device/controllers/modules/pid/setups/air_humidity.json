@@ -1,23 +1,20 @@
 {
-	"name":  "Air Temperature PID Controller",
+	"name":  "Air Humidity PID Controller",
 	"version": "1",
-	"uuid": "dd05f901-69b0-4285-bdc3-83d3be5447b9",
+	"uuid": "fa576d11-274e-4966-a730-378e2356aaa8",
 	"module_name": "pid.manager",
 	"class_name": "PIDControllerManager",
 	"parameters": {
 		"variables": {
 			"sensor_name": {
-				"type": "string", 
-				"default": "air_temperature_celsius"
+				"type": "string",
+				"default": "air_humidity_percent"
 			},
 			"positive_actuator_name": {
 				"type": "string",
-				"default": "air_heater_percent"
+				"default": "air_humidifier_percent"
 			},
-			"negative_actuator_name": {
-				"type": "string",
-				"default": "air_chiller_percent"
-			}
+			"negative_actuator_name": null
 		}
 	},
 	"properties": {

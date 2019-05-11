@@ -41,5 +41,13 @@ set -- "${POSITIONAL[@]}"
 export NO_DEVICE
 export SIMULATE
 
+cd data/images
+# serve images
+python3.6 -m http.server 3001 2> /dev/null &
+
+cd ../..
+
 # Run app
 python3.6 manage.py runserver 0.0.0.0:8000
+
+

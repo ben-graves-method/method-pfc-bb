@@ -48,7 +48,7 @@
   function showImage() {
     var slider = $("#image-slider");
     var img = document.getElementById("image");
-    img.src = 'http://localhost:8088/' + images[ slider.val() ];
+    img.src = window.location.origin + ':3001/' + images[ slider.val() ];
     console.log(`Showing image from: ${img.src}`)
     var fn = $("#file_name");
     var fntext = images[ slider.val() ];
