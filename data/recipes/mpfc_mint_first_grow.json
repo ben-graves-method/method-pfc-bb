@@ -1,0 +1,70 @@
+{
+	"format": "openag-phased-environment-v1",
+	"version": "1",
+	"creation_timestamp_utc": "2018-06-18T11:45:41Z",
+	"name": "mPFC Mint Growth",
+	"uuid": "4122acea-b0eb-49ca-b3f4-0fd1c36a44b2",
+	"parent_recipe_uuid": null,
+	"support_recipe_uuids": null,
+	"description": {
+		"brief": "Mint.",
+		"verbose": "Growing mint as a first test of the mPFC."
+	},
+	"authors": [
+		{
+			"name": "David Mayman",
+			"email": "dmayman@method.com",
+			"uuid": "603663ba-91b0-49fa-86ea-61d00834cb11"
+		}
+	],
+	"cultivars": [
+		{
+			"name": "N/A",
+			"uuid": "581d6309-1155-442f-8f50-9541a4005ea2"
+		}
+	],
+	"cultivation_methods": [
+		{
+		"name": "Shallow Water Culture",
+		"uuid": "30cbbded-07a7-4c49-a47b-e34fc99eefd0"
+		}
+	],
+	"environments": {
+		"standard_day": {
+			"name": "Standard Day",
+			"light_spectrum_nm_percent": {"380-399": 2.03, "400-499": 9, "500-599": 32, "600-700": 15, "701-780": 40},
+			"light_ppfd_umol_m2_s": 300,
+			"light_illumination_distance_cm": 50,
+			"air_temperature_celsius": 21,
+			"water_temperature_celsius": 18,
+			"air_humidity_percent": 50
+		},
+		"standard_night": {
+			"name": "Standard Night",
+			"light_spectrum_nm_percent": {"380-399": 0.0, "400-499": 0.0, "500-599": 0.0, "600-700": 0.0, "701-780": 0.0},
+			"light_ppfd_umol_m2_s": 0,
+			"light_illumination_distance_cm": 50,
+			"air_temperature_celsius": 16,
+			"water_temperature_celsius": 18,
+			"air_humidity_percent": 50
+		}
+	},
+	"phases": [
+		{
+			"name": "Standard",
+			"repeat": 30,
+			"cycles": [
+				{
+					"name": "On",
+					"environment": "standard_day",
+					"duration_hours": 16
+				},
+				{
+					"name": "Off",
+					"environment": "standard_night",
+					"duration_hours": 9
+				}
+			]
+		}
+	]
+}
