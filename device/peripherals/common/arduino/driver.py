@@ -50,6 +50,7 @@ class ArduinoCommsDriver:
             for p in pins:
                 self.i2c.write(bytes("*w_{}_{}^".format(p, value), 'utf-8'))
                 self.logger.debug("{} write_output: *w_{}_{}^".format(self.name, p, value))
+                time.sleep(.1)
         else:
             raise exceptions.WriteOutputError(logger=self.logger)
         # for pin in self.pins:
@@ -70,6 +71,7 @@ class ArduinoCommsDriver:
     def write_outputs(self, output_values):
         for pin, value in output_values.items():
             self.write_output(value, pin=pin)
+            time.sleep(.1)
 
 
     def set_high(self, pin=None, pins=None) -> None:
@@ -79,6 +81,7 @@ class ArduinoCommsDriver:
         elif pins:
             self.write_output(255, pins=pin)
             self.logger.debug("Setting pins {} high".format(pins))
+            time.sleep(.1)
         else:
             raise exceptions.SetHighError(logger=self.logger)
 
@@ -94,6 +97,7 @@ class ArduinoCommsDriver:
         elif pins:
             self.write_output(0, pin=pins)
             self.logger.debug("Setting pins {} low".format(pins))
+            time.sleep(.1)
         else:
             raise exceptions.SetLowError(logger=self.logger)
         

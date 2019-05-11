@@ -68,6 +68,7 @@ class CoordinatorManager(StateMachineManager):
 
         # Initialize logger
         self.logger = Logger("Coordinator", "coordinator")
+        # self.logger.setLevel("DEBUG")
         self.logger.debug("Initializing coordinator")
 
         # Initialize state

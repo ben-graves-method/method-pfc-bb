@@ -126,4 +126,4 @@ class CameraManager(manager.PeripheralManager):  # type: ignore
     def get_driver(module_name: str, class_name: str) -> abc.ABCMeta:
         module_instance = __import__(module_name, fromlist=[class_name])
         class_instance = getattr(module_instance, class_name)
-        return class_instanc
+        return class_instance

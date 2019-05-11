@@ -42,7 +42,7 @@
                     "sensor": null,
                     "actuator": {
 
-                        "output_variable": "fan_percent",
+                        "output_variable": "fan_percent"
                     }
                 },
                 "communication": {
